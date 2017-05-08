@@ -13,13 +13,15 @@
     (DriverManager/getConnection *connection-uri* conn-settings)))
 
 (defn get-row-data [result-set]
-  (loop [i 1
-         result []]
-    (if-let [column (try (.getString result-set i) (catch SQLException e nil))]
-      (recur (inc i) (conj result column))
-      result)))
+  (let [metadata (.getMetaData result-set)]
+    (loop [i 1
+           row {}]
+      (if-let [column-name (try (.getColumnName metadata i) (catch SQLException e nil))]
+        (recur (inc i) (assoc row column-name (.getObject result-set i)))
+        row))))
 
 (defn result-set->vector [result-set]
+  (println (result-set->columns result-set))
   (loop [result []]
     (if-let [next-result (try (.next result-set) (catch SQLException e nil))]
       (recur (conj result (get-row-data result-set)))
