@@ -17,11 +17,10 @@
     (loop [i 1
            row {}]
       (if-let [column-name (try (.getColumnName metadata i) (catch SQLException e nil))]
-        (recur (inc i) (assoc row column-name (.getObject result-set i)))
+        (recur (inc i) (assoc row (keyword column-name) (.getObject result-set i)))
         row))))
 
 (defn result-set->vector [result-set]
-  (println (result-set->columns result-set))
   (loop [result []]
     (if-let [next-result (try (.next result-set) (catch SQLException e nil))]
       (recur (conj result (get-row-data result-set)))
