@@ -7,9 +7,11 @@
 
 (defn get-connection []
   (let [conn-settings (Properties.)]
-    (try (.put conn-settings "user" (env :aws-access-key-id)) (catch Exception e false))
-    (try (.put conn-settings "password" (env :aws-secret-access-key)) (catch Exception e false))
-    (try (.put conn-settings "s3_staging_dir" (env :athena-s3-staging-dir)) (catch Exception e false))
+    (try
+      (.put conn-settings "user" (env :aws-access-key-id))
+      (.put conn-settings "password" (env :aws-secret-access-key))
+      (.put conn-settings "s3_staging_dir" (env :athena-s3-staging-dir))
+      (catch Exception e false))
     (DriverManager/getConnection *connection-uri* conn-settings)))
 
 (defn get-row-data [result-set]
