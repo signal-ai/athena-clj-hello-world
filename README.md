@@ -1,36 +1,15 @@
 # athena-clj-hello-world
 
-FIXME: description
+Prepare env. vars:
 
-## Installation
+```
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
+export AWS_SECRET_ACCESS_KEY=
+```
 
-Download from http://example.com/FIXME.
-
-## Usage
-
-FIXME: explanation
-
-    $ java -jar athena-clj-hello-world-0.1.0-standalone.jar [args]
-
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
-
-## License
-
-Copyright © 2017 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Run in `lein repl`:
+```clojure
+(require '[athena.core :as a] :reload-all)
+(a/query "SELECT * FROM table WHERE field = true LIMIT 10;")
+```
